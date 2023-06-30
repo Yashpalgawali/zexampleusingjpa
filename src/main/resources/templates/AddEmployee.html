@@ -79,7 +79,7 @@
     	<select class="form-control" style="width:100%;" id="company"  name="company" required onchange="getDeptByCompId(this.value)">
     		<option value="" selected disabled="disabled">Select Company Name</option>
     			<th:block th:each="cmp : ${clist}">
-    				<option th:value="${cmp.company_id}" th:text="${cmp.comp_name}"></option>
+    				<option th:value="${cmp.comp_id}" th:text="${cmp.comp_name}"></option>
     			</th:block>
     	</select>
     </div>

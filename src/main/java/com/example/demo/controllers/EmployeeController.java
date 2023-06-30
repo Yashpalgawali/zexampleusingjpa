@@ -17,6 +17,10 @@ import com.example.demo.repository.Companyrepo;
 import com.example.demo.repository.DepartmentRepo;
 import com.example.demo.repository.DesignationRepo;
 import com.example.demo.repository.EmployeeRepo;
+import com.example.demo.service.CompanyService;
+import com.example.demo.service.DepartmentService;
+import com.example.demo.service.DesignationService;
+import com.example.demo.service.EmployeeService;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
@@ -26,18 +30,25 @@ public class EmployeeController {
 	EmployeeRepo emprepo;
 	
 	@Autowired
+	EmployeeService empserv;
+	
+	@Autowired
 	Companyrepo comprepo;
 	
 	@Autowired
-	DesignationRepo desigrepo;
+	DesignationService desigserv;
 	
 	@Autowired
-	DepartmentRepo deptrepo;
+	CompanyService compserv;
 	
+	@Autowired
+	DepartmentService deptserv;
+	
+	@GetMapping("addemployee")
 	public String addEmployee(@ModelAttribute("Employee")Employee emp,Model model)
 	{
-		model.addAttribute("", deptrepo.findAll());
-		model.addAttribute("desig", desigserv)
+		model.addAttribute("clist", compserv.getAllCompanies());
+		model.addAttribute("dlist", desigserv.getAllDesignations());
 		return "AddEmployee";
 	}
 	
@@ -63,9 +74,10 @@ public class EmployeeController {
 	@GetMapping("getdeptbyempid/{id}")@ResponseBody
 	public List<Employee> getDepartmentbyEmpId(@PathVariable("id") Long id)
 	{
-		List<Employee>  elist = emprepo.getDeptByEmpid(id);
+		//List<Employee>  elist = emprepo.getDeptByEmpId(id);
 		
-		elist.stream().forEach(e->System.err.println(e.toString()));
+		List<Employee>  elist = empserv.getDeptByEmpId(""+id);
+		//elist.stream().forEach(e->System.err.println(e.toString()));
 		return elist;
 	}
 	
